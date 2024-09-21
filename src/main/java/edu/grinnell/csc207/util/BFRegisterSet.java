@@ -2,6 +2,12 @@ package edu.grinnell.csc207.util;
 
 import java.math.BigInteger;
 
+
+/**
+ * Stores and gets BigFractions from a register of letters.
+ *
+ * @author Anthony Castleberry
+ */
 public class BFRegisterSet {
   
 

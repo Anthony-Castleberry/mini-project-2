@@ -8,6 +8,11 @@ import java.io.PrintWriter;
 
 import java.util.Scanner;
 
+/**
+ * A calculator that continously reads new inputs.
+ *
+ * @author Anthony Castleberry
+ */
 public class InteractiveCalculator {
 
   private static final char a = 'a';

@@ -6,6 +6,12 @@ import edu.grinnell.csc207.util.BFRegisterSet;
 
 import java.io.PrintWriter;
 
+
+/**
+ * A calculator that reads from a command-line input.
+ *
+ * @author Anthony Castleberry
+ */
 public class QuickCalculator {
 
   private static final char a = 'a';

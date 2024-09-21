@@ -3,6 +3,11 @@ package edu.grinnell.csc207.util;
 import java.math.BigInteger;
 
 
+/**
+ * Behind scenes calculator that runs the operations and stores the last value computed.
+ *
+ * @author Anthony Castleberry
+ */
 public class BFCalculator {
 
   private static final BigInteger ZERO = BigInteger.valueOf(0);
