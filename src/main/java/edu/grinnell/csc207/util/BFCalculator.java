@@ -10,60 +10,69 @@ import java.math.BigInteger;
  */
 public class BFCalculator {
 
-  private static final BigInteger ZERO = BigInteger.valueOf(0);
+  /**
+   * Hols the last value computed in the calculator, starts at 0.
+   */
+  private BigFraction lastval = new BigFraction(0, 1);
 
-  BigFraction lastval = new BigFraction(0,1);
-
-  /**gets the last value used; 0 if none exist.*/
+  /**
+   * gets the last value used; 0 if none exist.
+   *
+   * @return BigFraction
+   *
+   */
   public BigFraction get() {
-    return lastval; 
-  } // get
+    return lastval;
+  } // get()
 
   /**adds val to last value used.
-   * 
+   *
    * @param val
    */
   public void add(BigFraction val) {
     lastval = val.add(lastval);
-  } // add
+  } // add(BigFraction)
 
   /**subtracts val to last value used.
-   * 
+   *
    * @param val
    */
   public void subtract(BigFraction val) {
     lastval = lastval.subtract(val);
-  } // subtract
+  } // subtract(BigFraction)
 
   /**multiplies val to last value used.
-   * 
+   *
    * @param val
    */
   public void multiply(BigFraction val) {
 
-    if (lastval.denom == ZERO && lastval.num == ZERO) {
+    if (lastval.getdenom() == BigInteger.ZERO && lastval.getnum() == BigInteger.ZERO) {
       lastval = val;
-    }
+    } // if
 
     lastval = val.multiply(lastval);
 
-  } // multiply
+  } // multiply(BigFraction)
 
   /**divides val to last value used.
-   * 
+   *
    * @param val
    */
   public void divide(BigFraction val) {
 
-    if (lastval.denom == ZERO && lastval.num == ZERO) {
+    if (lastval.getdenom() == BigInteger.ZERO && lastval.getnum() == BigInteger.ZERO) {
       lastval = val;
-    }
+    } // if
 
     lastval = lastval.divide(val);
 
-  } // divide
+  } // divide(BigFraction)
 
+  /**
+   * resets the calculator by replacing lastval with 0.
+   */
   public void clear() {
-    lastval = new BigFraction(0,1);
-  }
-}
+    lastval = new BigFraction(0, 1);
+  } // clear()
+} // class BFCalculator

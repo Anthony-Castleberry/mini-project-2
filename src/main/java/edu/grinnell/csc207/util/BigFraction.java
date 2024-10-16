@@ -9,17 +9,28 @@ import java.math.BigInteger;
  */
 public class BigFraction {
 
-public final static int NEGATIVE_ONE = -1;
+  /**
+   * Constant holding -1 to avoid magic numbers.
+   */
+  public static final int NEGATIVE_ONE = -1;
 
-  /** The numerator of the fraction. Can be positive, zero or negative. */
+  /**
+   * The numerator of the fraction. Can be positive, zero or negative.
+   */
+  private BigInteger num;
 
-  BigInteger num;
 
+  /**
+   * The denominator of the fraction. Must be non-negative.
+   */
+  private BigInteger denom;
 
-  /** The denominator of the fraction. Must be non-negative. */
-
-  BigInteger denom;
-
+  /**
+   * constructs a BigFraction from BigIntegers.
+   *
+   * @param numerator
+   * @param denominator
+   */
   public BigFraction(BigInteger numerator, BigInteger denominator) {
 
     this.num = BigFraction.simplifynum(numerator, denominator);
@@ -28,21 +39,31 @@ public final static int NEGATIVE_ONE = -1;
 
   } // BigFraction(BigInteger, BigInteger)
 
-  
+
+  /**
+   * constructs a BigFraction from Integers.
+   *
+   * @param numerator will be converted to Biginteger
+   * @param denominator wil be converted to BigInteger
+   */
   public BigFraction(int numerator, int denominator) {
 
-    BigInteger num = BigInteger.valueOf(numerator);
+    BigInteger intnum = BigInteger.valueOf(numerator);
 
-    BigInteger denom = BigInteger.valueOf(denominator);
+    BigInteger intdenom = BigInteger.valueOf(denominator);
 
-    this.num = BigFraction.simplifynum(num, denom);
+    this.num = BigFraction.simplifynum(intnum, intdenom);
 
-    this.denom = BigFraction.simplifydenom(num, denom);
+    this.denom = BigFraction.simplifydenom(intnum, intdenom);
 
   } // BigFraction(int, int)
 
 
-
+  /**
+   * Constucts a BigInteger from a Sting containing a fraction.
+   *
+   * @param str
+   */
   public BigFraction(String str) {
 
     int slash = str.indexOf("/");
@@ -54,24 +75,26 @@ public final static int NEGATIVE_ONE = -1;
       this.denom = BigInteger.ONE;
     } else {
 
-        String top = str.substring(0, slash);
+      String top = str.substring(0, slash);
 
-        String bottom = str.substring((slash + 1));
+      String bottom = str.substring((slash + 1));
 
 
-        BigInteger num = BigInteger.valueOf((Integer.parseInt(top)));
+      BigInteger strnum = BigInteger.valueOf((Integer.parseInt(top)));
 
-        BigInteger denom = BigInteger.valueOf((Integer.parseInt(bottom)));
+      BigInteger strdenom = BigInteger.valueOf((Integer.parseInt(bottom)));
 
-        this.num = BigFraction.simplifynum(num, denom);
+      this.num = BigFraction.simplifynum(strnum, strdenom);
 
-        this.denom = BigFraction.simplifydenom(num, denom);
-      }
+      this.denom = BigFraction.simplifydenom(strnum, strdenom);
+    } // if
   } // BigFraction
 
 
-  
 
+  /**
+   * @return the BigFraction in the form of a double
+   */
   public double doubleValue() {
 
     return this.num.doubleValue() / this.denom.doubleValue();
@@ -79,7 +102,12 @@ public final static int NEGATIVE_ONE = -1;
   } // doubleValue()
 
 
-  
+  /**
+   * adds input BigFraction to this BigFraction.
+   *
+   * @param addend
+   * @return new BigFraction resulting from the addition
+   */
   public BigFraction add(BigFraction addend) {
 
     BigInteger tempNumerator;
@@ -105,13 +133,19 @@ public final static int NEGATIVE_ONE = -1;
 
     resultNumerator = BigFraction.simplifynum(tempNumerator, tempDenominator);
     // Return the computed value
-    
+
     resultDenominator = BigFraction.simplifydenom(tempNumerator, tempDenominator);
 
     return new BigFraction(resultNumerator, resultDenominator);
 
   } // add(BigFraction)
 
+  /**
+   * subtracts input BigFraction to this BigFraction.
+   *
+   * @param subend
+   * @return new BigFraction resulting from the subtraction
+   */
   public BigFraction subtract(BigFraction subend) {
 
     BigInteger tempNumerator;
@@ -131,31 +165,44 @@ public final static int NEGATIVE_ONE = -1;
 
     resultNumerator = BigFraction.simplifynum(tempNumerator, tempDenominator);
 
-    
+
     resultDenominator = BigFraction.simplifydenom(tempNumerator, tempDenominator);
 
     return new BigFraction(resultNumerator, resultDenominator);
 
   } // subtract(BigFraction)
 
+  /**
+   * multiplies input BigFraction to this BigFraction.
+   *
+   * @param a
+   * @return new BigFraction resulting from the multiplication
+   */
+  public BigFraction multiply(BigFraction a) {
 
-  public BigFraction multiply(BigFraction a){
-
-    BigFraction b = new BigFraction((this.num.multiply(a.num)),(this.denom.multiply(a.denom)));
+    BigFraction b = new BigFraction((this.num.multiply(a.num)), (this.denom.multiply(a.denom)));
 
     return new BigFraction(simplifynum(b.num, b.denom), simplifydenom(b.num, b.denom));
 
   } // multiply(BigFraction)
 
-  public BigFraction divide(BigFraction a){
+  /**
+   * divides input BigFraction to this BigFraction.
+   *
+   * @param a
+   * @return new BigFraction resulting from the division
+   */
+  public BigFraction divide(BigFraction a) {
 
     return this.multiply(new BigFraction(a.denom, a.num));
 
   } // divide(BigFraction)
 
 
- 
 
+  /**
+   * @return denominator
+   */
   public BigInteger denominator() {
 
     return this.denom;
@@ -164,30 +211,43 @@ public final static int NEGATIVE_ONE = -1;
 
 
 
-
+  /**
+   * @return denominator
+   */
   public BigInteger numerator() {
 
     return this.num;
 
   } // numerator()
 
-
+  /**
+   * @param x numerator
+   * @param y denominator
+   * @return simplified numerator
+   */
   static BigInteger simplifynum(BigInteger x, BigInteger y) {
 
     BigInteger gcd = x.gcd(y);
 
     return x.divide(gcd);
-  }
+  } // simplifynum()
 
+  /**
+   * @param x numerator
+   * @param y denominator
+   * @return simplified denominator
+   */
   static BigInteger simplifydenom(BigInteger x, BigInteger y) {
 
     BigInteger gcd = x.gcd(y);
 
     return y.divide(gcd);
-  }
+  } // simplifydenom
 
 
-
+  /**
+   * @return The BigFraction as a String in the from "num/denom"
+   */
   public String toString() {
 
     // Special case: It's zero
@@ -207,5 +267,19 @@ public final static int NEGATIVE_ONE = -1;
     return this.num + "/" + this.denom;
 
   } // toString()
+
+  /**
+   * @return numerator of this BigFraction
+   */
+  public BigInteger getnum() {
+    return this.num;
+  } // getnum()
+
+  /**
+   * @return denominator of this BigFraction
+   */
+  public BigInteger getdenom() {
+    return this.denom;
+  } // getdenom()
 
 } // class BigFraction
